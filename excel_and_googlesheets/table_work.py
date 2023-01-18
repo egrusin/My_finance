@@ -5,7 +5,7 @@ from copy import copy
 from openpyxl.styles import Font, Alignment
 
 
-__all__ = ['Report', 'get_today', 'format_cell']
+__all__ = ['Report', 'format_cell']
 
 
 def format_cell(origin, new):
@@ -15,11 +15,6 @@ def format_cell(origin, new):
                               vertical=origin.alignment.vertical)
     new.number_format = origin.number_format
     print([new.alignment, new.font], [origin.alignment, origin.font])
-
-
-def get_today() -> str:
-    date = datetime.datetime.now()
-    return f'{date.day}.{date.month:>02}.{date.year}'
 
 
 class Report:
@@ -81,6 +76,3 @@ class Report:
 
     def save_book(self):
         self.book.save(self.path_to_book)
-
-
-
