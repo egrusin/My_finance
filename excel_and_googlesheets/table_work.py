@@ -1,7 +1,7 @@
+from copy import copy
 from openpyxl import Workbook
 from openpyxl.reader.excel import load_workbook
-import datetime
-from copy import copy
+from openpyxl.formula.translate import Translator
 from openpyxl.styles import Font, Alignment
 
 
@@ -9,12 +9,9 @@ __all__ = ['Report', 'format_cell']
 
 
 def format_cell(origin, new):
-    new.font = Font(name=origin.font.name,
-                    sz=origin.font.sz)
-    new.alignment = Alignment(horizontal=origin.alignment.horizontal,
-                              vertical=origin.alignment.vertical)
+    new.font = copy(origin.font)
+    new.alignment = copy(origin.alignment)
     new.number_format = origin.number_format
-    print([new.alignment, new.font], [origin.alignment, origin.font])
 
 
 class Report:
@@ -76,3 +73,15 @@ class Report:
 
     def save_book(self):
         self.book.save(self.path_to_book)
+
+    def write_report(self, sheet, day) -> None:
+        """Write report of sum daily transactions"""
+        lr = self.last_row(sheet)
+        er = lr + 1
+        date_cell = lr[0]
+        cell_to_write = sheet[er][0]
+        format_cell(date_cell, cell_to_write)
+        cell_to_write.value = day
+        for cell in sheet[er][1:]:
+            pass
+

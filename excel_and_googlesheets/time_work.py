@@ -12,4 +12,4 @@ def get_today() -> str:
 
 def get_diff(date: str) -> list:
     """Returns difference between now date and last date"""
-    return None
+    ...
