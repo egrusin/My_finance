@@ -13,13 +13,10 @@ if __name__ == '__main__':
     day = get_today()
     day_transactions = get_day_transactions(SPREADSHEET_ID, RANGE_NAME, day)
 
-    # print(day_transactions)
     for tr in day_transactions:
         cur_workbook.write_transaction(tempsheet, tr)
-
     mainsheet = cur_workbook.get_sheet('Счета')
-    cur_workbook.write_report(mainsheet)
-
+    cur_workbook.write_report(mainsheet, day)
     cur_workbook.save_book()
 
 

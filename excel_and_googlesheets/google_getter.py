@@ -11,7 +11,7 @@ __all__ = ['get_day_transactions']
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 
 
-def day_filter(massive: list[list], day: str):
+def day_filter(massive: list[list], day: str) -> list[list]:
     """Returns daily transactions"""
     transactions = []
     for transaction in massive:
