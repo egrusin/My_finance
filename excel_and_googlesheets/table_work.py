@@ -20,7 +20,8 @@ class Report:
         """Set work book"""
         self.path_to_book = path_to_book
         self.book = load_workbook(path_to_book)
-        self.to_write = None
+        self.__to_write_transaction = None
+        self.__to_write_report = None
 
     def get_book(self) -> Workbook:
         return self.book
@@ -30,6 +31,7 @@ class Report:
 
     @staticmethod
     def last_row(sheet) -> int:
+        """Returns number of the last not-empty row in sheet"""
         # print('def last_row')
         i = 1
         while True:
@@ -40,17 +42,17 @@ class Report:
 
     def empty_row(self, sheet):
         # print('def empty_row')
-        if self.to_write is None:
+        if self.__to_write_transaction is None:
             find = self.last_row(sheet) + 1
-            self.to_write = find
+            self.__to_write_transaction = find
             return find
         else:
-            return self.to_write
+            return self.__to_write_transaction
 
-    def write_row(self, sheet, transaction):
-        # print('def write_row')
-        row_to_write = [i for i in sheet[self.to_write]]
-        example_row = [i for i in sheet[self.to_write - 1]]
+    def __write_transaction_row(self, sheet, transaction):
+        # Rewrite clear
+        row_to_write = [i for i in sheet[self.__to_write_transaction]]
+        example_row = [i for i in sheet[self.__to_write_transaction - 1]]
         for ind, value in enumerate(row_to_write):
             row_to_write[ind].font = copy(example_row[ind].font)
             row_to_write[ind].alignment = copy(example_row[ind].alignment)
@@ -63,25 +65,18 @@ class Report:
 
     def write_transaction(self, sheet, transaction: list) -> None:
         # print('def write_transaction')
-        if self.to_write is None:
+        if self.__to_write_transaction is None:
             self.empty_row(sheet)
-            self.write_row(sheet, transaction)
-            self.to_write += 1
+            self.__write_transaction_row(sheet, transaction)
+            self.__to_write_transaction += 1
         else:
-            self.write_row(sheet, transaction)
-            self.to_write += 1
+            self.__write_transaction_row(sheet, transaction)
+            self.__to_write_transaction += 1
 
     def save_book(self):
         self.book.save(self.path_to_book)
 
     def write_report(self, sheet, day) -> None:
         """Write report of sum daily transactions"""
-        lr = self.last_row(sheet)
-        er = lr + 1
-        date_cell = lr[0]
-        cell_to_write = sheet[er][0]
-        format_cell(date_cell, cell_to_write)
-        cell_to_write.value = day
-        for cell in sheet[er][1:]:
-            pass
+
 
