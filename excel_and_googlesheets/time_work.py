@@ -1,7 +1,7 @@
 from datetime import datetime, date, timedelta
 
 
-__all__ = ['get_today']
+__all__ = ['get_today', 'get_diff']
 
 
 def get_today() -> str:
@@ -26,6 +26,3 @@ def get_diff(start_date: str, last_date: str) -> list:
         s_date += step
         result.append(f'{s_date.day:>02}.{s_date.month:>02}.{s_date.year}')
     return result
-
-
-print(get_diff('20.01.2023', '02.02.2023'))
