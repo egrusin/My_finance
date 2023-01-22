@@ -75,7 +75,7 @@ class Report:
             except ValueError:
                 empty_cell.value = transaction[ind]
 
-    def write_transaction(self, sheet: Worksheet, transaction: list) -> None:  # Nice!
+    def write_transaction(self, sheet: Worksheet, transaction: list) -> None:  # Rewrite with empty_row method
         """Check | find row to write transaction and do that"""
         row = self.__empty_rows.get(str(sheet))
         if row is None:
@@ -102,7 +102,7 @@ class Report:
             col = cell.column_letter
             cell.value = formula(empty_row, col)
 
-    def write_report(self, sheet: Worksheet, day: str) -> None:  # Nice!
+    def write_report(self, sheet: Worksheet, day: str) -> None:  # Rewrite with empty_row method
         """Write report of sum daily transactions"""
         row = self.__empty_rows.get(str(sheet))
         if row is None:
@@ -112,3 +112,7 @@ class Report:
         else:
             self.__write_report_row(sheet, day, row)
             self.__empty_rows[str(sheet)] += 1
+
+    def get_last_report(self, sheet: Worksheet) -> str:
+        lr = self.last_row(sheet)
+        return sheet[lr][0].value

@@ -16,9 +16,8 @@ if __name__ == '__main__':
     for tr in day_transactions:
         cur_workbook.write_transaction(tempsheet, tr)
     mainsheet = cur_workbook.get_sheet('Счета')
-    cur_workbook.write_report(mainsheet, day)
+
+    last_report = cur_workbook.get_last_report(mainsheet)
+    for date in get_diff(cur_workbook.get_last_report(mainsheet), day):
+        cur_workbook.write_report(mainsheet, date)
     cur_workbook.save_book()
-
-
-
-
