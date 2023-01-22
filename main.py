@@ -1,6 +1,8 @@
 from excel_and_googlesheets import *
 from copy import copy
 
+# TO DO remember main and transaction sheet to most useful model
+# TO DO check and create directories for save Excel files
 
 SPREADSHEET_ID = '1kuAMznNIeI9zjzDT21RloxUSOexdYS50Mmpt2V-wP50'
 RANGE_NAME = 'finance!A:F'
