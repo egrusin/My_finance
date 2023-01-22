@@ -114,5 +114,6 @@ class Report:
             self.__empty_rows[str(sheet)] += 1
 
     def get_last_report(self, sheet: Worksheet) -> str:
+        """Return last report date from sheet"""
         lr = self.last_row(sheet)
         return sheet[lr][0].value
