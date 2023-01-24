@@ -14,6 +14,7 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 def day_filter(massive: list[list], day: str) -> list[list]:
     """Returns daily transactions"""
     transactions = []
+
     for transaction in massive:
         if not transaction:
             continue
@@ -25,7 +26,7 @@ def day_filter(massive: list[list], day: str) -> list[list]:
     return transactions
 
 
-def get_day_transactions(sheet_id, range_sheet, day):
+def get_day_transactions(sheet_id, range_sheet, days: list[str]) -> list[list]:
     """Shows basic usage of the Sheets API.
     :returns values from a finance spreadsheet.
     """
@@ -58,7 +59,7 @@ def get_day_transactions(sheet_id, range_sheet, day):
             print('No data found.')
             return
 
-        return day_filter(values, day)
+        return values
 
     except HttpError as err:
         print(err)
