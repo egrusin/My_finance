@@ -4,25 +4,25 @@ from datetime import datetime, date, timedelta
 __all__ = ['get_today', 'get_diff']
 
 
-def get_today() -> str:
+def get_today() -> str:  # Strong!
     """Returns now date in format dd.mm.yyyy"""
     date_now = datetime.now()
     return f'{date_now.day:>02}.{date_now.month:>02}.{date_now.year}'
 
 
-def get_diff(start_date: str, last_date: str) -> list:
-    """Returns difference between start date and last date
-    don't include start date, include last date"""
+def get_diff(start_date: str, stop_date: str) -> list:  # Nice!
+    """Returns difference between start (last report) date and stop (today) date
+    don't include start date, include stop date"""
 
     step = timedelta(days=1)
-    s_day, s_mounth, s_year = map(int, start_date.split('.'))
-    l_day, l_mounth, l_year = map(int, last_date.split('.'))
-    s_date = date(s_year, s_mounth, s_day)
-    l_date = date(l_year, l_mounth, l_day)
-    diff = (l_date - s_date).days
+    sp_d, sp_m, sp_y = map(int, stop_date.split('.'))
+    st_d, st_m, st_y = map(int, start_date.split('.'))
+    stop_datetime = date(sp_y, sp_m, sp_d)
+    start_datetime = date(st_y, st_m, st_d)
+    diff = (stop_datetime - start_datetime).days
 
     result = []
     for i in range(diff):
-        s_date += step
-        result.append(f'{s_date.day:>02}.{s_date.month:>02}.{s_date.year}')
+        start_datetime += step
+        result.append(f'{start_datetime.day:>02}.{start_datetime.month:>02}.{start_datetime.year}')
     return result
